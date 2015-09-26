@@ -69,7 +69,7 @@ var getYearsToNamesFromFiles = function(dir) {
         if (names[j].trim()) {
           // create a name object and store it in the heap
           let parts = names[j].split(',');
-          sortedNames.push(new Name(parts[0], parts[1], parts[2]));
+          sortedNames.push(new Name(parts[0].toLowerCase(), parts[1], parts[2]));
         }
       }
       // strip off the file suffix
@@ -127,6 +127,7 @@ var getMostPopular = function(years, range, num, predicate) {
       maxHeap.push(itrState);
     }
   }
+
   for (var i = parseInt(range[0]); i < parseInt(range[1]) + 1; ++i) {
     let name = years.get(i.toString());
     if (name) {
@@ -143,9 +144,12 @@ var getMostPopular = function(years, range, num, predicate) {
     offset = 0;
   }
   while (maxHeap.size() > 0 && (offset < total || names.size() < num)) {
-    console.log(`offset: ${offset}, total: ${total}, heap: ${names.size()}`);
+    //console.log(`offset: ${offset}, total: ${total}, heap: ${names.size()}`);
     for (var i = 0; i < 1000; ++i) {
       var itrState = maxHeap.pop();
+      if (!itrState) {
+        break;
+      }
       total -= itrState.lastCount;
       updateNameCounts(itrState);
     }
@@ -168,8 +172,16 @@ var getMostPopular = function(years, range, num, predicate) {
 };
 
 
-// get the 5 most popular male names from 1900 to 2000
 let years = getYearsToNamesFromFiles(dataDir);
-console.log('here');
-let names = getMostPopular(years, ['1900', '1909'], 20, n => n.isMale());
+
+// get the 5 most popular male names from 1900 to 2000
+//let names = getMostPopular(years, ['1900', '2000'], 5, n => n.isMale());
+//console.log(names);
+
+// get the 5 most popular names from 2014 that start with 'r'
+//let names = getMostPopular(years, ['2014', '2014'], 5, n => n.startsWith('r'));
+//console.log(names);
+
+// doesn't show the female versions
+let names = getMostPopular(years, ['1900', '2014'], 5, n => n.startsWith('reed'));
 console.log(names);
