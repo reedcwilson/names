@@ -7,7 +7,7 @@
  * # mostPopularNames
  */
 angular.module('clientApp')
-.directive('mostPopularNames', function () {
+.directive('mostPopularNames', ['$http', function (http) {
   return {
     templateUrl: '../../views/templates/mostPopularNames.html',
     restrict: 'EA',
@@ -27,6 +27,15 @@ angular.module('clientApp')
       scope.changeGender = function(g) {
         scope.gender = g;
       };
+
+      scope.submitPopular = function() {
+        http.post('/api/popular', {"range": scope.value, "number": scope.nTop, "startsWith": scope.startsWith, "gender": scope.gender})
+          .then(function(response) {
+            console.log(response.data);
+          }, function(response) {
+            console.log(response.data);
+          });
+      };
     }
   };
-});
+}]);
