@@ -17,11 +17,7 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
   </head>
   <body ng-app="clientApp">
-    <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
 
-    <!-- Add your site or application content here -->
     <!--<div class="header">-->
       <!--<div class="navbar navbar-default" role="navigation">-->
         <!--<div class="container">-->
@@ -49,7 +45,7 @@
     <!--</div>-->
 
     <div class="container">
-    <div ng-view=""></div>
+      <div ng-view=""></div>
     </div>
 
     <div class="footer">
@@ -88,8 +84,11 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/about.js"></script>
+    <script src="scripts/directives/mostpopularnames.js"></script>
     <!-- endbuild -->
 
+    <!-- I don't know why these weren't picked up -->
+    <script src="scripts/directives/ng-slider.js"></script>
     <script src="scripts/slider.js"></script>
 </body>
 </html>

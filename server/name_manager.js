@@ -102,7 +102,7 @@ var getNthItems = function(heap, n) {
   }
 }
 
-var getMostPopular = function(years, range, num, predicate) {
+var getMostPopular = function(range, num, predicate) {
   var maxHeap = new Heap((l,r) => r.lastCount - l.lastCount);
   var names = new Heap((l,r) => r.count - l.count);
   var namesLookup = new Map();
@@ -171,17 +171,6 @@ var getMostPopular = function(years, range, num, predicate) {
   return finalNames;
 };
 
-
 let years = getYearsToNamesFromFiles(dataDir);
 
-// get the 5 most popular male names from 1900 to 2000
-//let names = getMostPopular(years, ['1900', '2000'], 5, n => n.isMale());
-//console.log(names);
-
-// get the 5 most popular names from 2014 that start with 'r'
-//let names = getMostPopular(years, ['2014', '2014'], 5, n => n.startsWith('r'));
-//console.log(names);
-
-// doesn't show the female versions
-let names = getMostPopular(years, ['1900', '2014'], 5, n => n.startsWith('reed'));
-console.log(names);
+module.exports = { 'getMostPopular': getMostPopular };

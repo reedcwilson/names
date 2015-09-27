@@ -1,0 +1,43 @@
+
+<div class="page-header">
+  <h1>name prospector <small>searching for names</small></h1>
+</div>
+
+<div class="form-group">
+  <div class="row">
+    <label>The number of most popular names</label>
+  </div>
+  <input class="form-control" type="text" placeholder="e.g. 5" ng-model="nTop">
+</div>
+
+<div class="form-group">
+  <div class="row">
+    <label>Matching a gender</label>
+  </div>
+  <div class="btn-group" role="group" aria-label="..." data-toggle="buttons">
+    <label class="btn btn-default" ng-click="changeGender(g)" ng-repeat="g in genders">
+      <input type="radio" value="{{g}}" />
+      {{g}}
+    </label>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="row">
+    <label>In a range of years</label>
+  </div>
+  <label><b class="slider-label">1880</b></label>
+  <span slider slider-id="yearSlider" ng-model="yearRange" value="value" min="minRange" max="maxRange" range="true" on-stop-slide="slideDelegate(value, $event)"></span>
+  <label><b class="slider-label">2014</b></label>
+</div>
+
+<div class="form-group">
+  <div class="row">
+    <label>Starting with certain characters</label>
+  </div>
+  <input class="form-control" type="text" placeholder="e.g. Fre" ng-model="startsWith">
+</div>
+
+<div class="form-group">
+  <input class="btn btn-primary" type="submit" value="Submit">
+</div>
