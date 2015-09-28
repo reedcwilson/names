@@ -6,8 +6,12 @@ var router = express.Router();
 var nameManager = require('../name_manager');
 
 var createPredicate = function(gender, startsWith) {
-  gender = gender.toLowerCase();
-  startsWith = startsWith.toLowerCase();
+  if (gender != undefined) {
+    gender = gender.toLowerCase();
+  }
+  if (startsWith != undefined) {
+    startsWith = startsWith.toLowerCase();
+  }
   return (n) => (startsWith == undefined ? true : n.startsWith(startsWith) && 
     ((gender == undefined || gender === 'both') ? true : (gender === 'male' ? n.isMale() : n.isFemale())))
 };
