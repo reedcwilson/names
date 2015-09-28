@@ -18,4 +18,4 @@ nameManager.getMostPopular
 
 // it reports ryan as the top with a gender of female. the number of names might be right but the gender is wrong
 let names = nameManager.getMostPopular(['2014', '2014'], 5, n => n.startsWith('r'));
-console.log(names);
+console.log(JSON.stringify(names));
