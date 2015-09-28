@@ -42,4 +42,11 @@
   <input class="btn btn-primary" type="submit" value="Submit" ng-click="submitPopular()">
 </div>
 
-<flot dataset="namesResults" options="namesChartOptions"></flot>
+<div class="alert alert-danger alert-dismissible fade in" role="alert" ng-repeat="message in errorMessages">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+  <strong>Input Error!</strong> {{message}}
+</div>
+
+<div id="namesChart" class="flot-container">
+  <flot class="flot-placeholder" dataset="namesResults" options="namesChartOptions"></flot>
+</div>
