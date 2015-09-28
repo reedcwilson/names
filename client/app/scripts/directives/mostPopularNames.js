@@ -19,6 +19,19 @@ angular.module('clientApp')
       scope.minRange = scope.yearRange[0];
       scope.maxRange = scope.yearRange[1];
       scope.value = [1989, 2014];
+      scope.namesChartOptions = {
+        series: {
+          bars: {
+            show: true,
+            barWidth: 0.6,
+            align: 'center'
+          }
+        },
+        xaxis: {
+          mode: 'categories',
+          tickLength: 0
+        }
+      };
 
       scope.slideDelegate = function(value) {
         scope.value = value;
@@ -31,9 +44,9 @@ angular.module('clientApp')
       scope.submitPopular = function() {
         http.post('/api/popular', {"range": scope.value, "number": scope.nTop, "startsWith": scope.startsWith, "gender": scope.gender})
           .then(function(response) {
-            console.log(response.data);
+            scope.namesResults = response.data;
           }, function(response) {
-            console.log(response.data);
+            console.log('An error occurred: ' + response.data);
           });
       };
     }
