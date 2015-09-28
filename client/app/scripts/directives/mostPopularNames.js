@@ -12,7 +12,7 @@ angular.module('clientApp')
     templateUrl: '../../views/templates/mostPopularNames.html',
     restrict: 'EA',
     link: function(scope) {
-      scope.genders = ['Male', 'Female', 'Unisex', 'All'];
+      scope.genders = ['Male', 'Female', 'Both'];
       scope.nTop = 5;
       scope.startsWith = 'Abra';
       scope.yearRange = [1880, 2014]; 
