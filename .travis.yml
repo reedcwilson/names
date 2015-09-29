@@ -7,7 +7,7 @@ before_install:
   - "sh ./install.sh"
 
 before_script:
-  - "npm install -g grunt"
+  - "npm install -g grunt-cli"
   - "npm install -g mocha"
 
 script: 
