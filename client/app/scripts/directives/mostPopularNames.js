@@ -38,11 +38,21 @@ angular.module('clientApp')
               var flotData = prepareForFlot(response.data);
               scope.namesResults = flotData[0];
               var ticks = flotData[1];
-              scope.namesChartOptions = createChartOptions(ticks);
+              scope.namesChartOptions = createChartOptions(ticks, getMaxCount(response.data));
             }, function(response) {
               console.log('An error occurred: ' + response.data);
             });
         }
+      };
+
+      var getMaxCount = function(names) {
+        var max = 0;
+        for (var i = 0; i < names.length; ++i) {
+          if (names[i].count > max) {
+            max = names[i].count;
+          }
+        }
+        return max;
       };
 
       var errorStrings = { 
@@ -56,7 +66,7 @@ angular.module('clientApp')
         return Number.isInteger(value) && 
           value !== undefined && 
           value > 0 && 
-          value < 100;
+          value < 101;
       };
 
       var validateStartsWith = function() {
@@ -77,7 +87,7 @@ angular.module('clientApp')
         return validValue && validStartsWith;
       };
 
-      var createChartOptions = function(ticks) {
+      var createChartOptions = function(ticks, max) {
         return {
               yaxis: { 
                 ticks: ticks,
@@ -90,7 +100,9 @@ angular.module('clientApp')
               series: {
                 bars: {
                   numbers: {
-                    show: true
+                    show: (t) => t.toLocaleString(),
+                    xAlign: (x) => Math.max(x - (max*0.015), max*0.01),
+                    rotate: 90
                   },
                   show: true,
                   horizontal: true,
@@ -100,7 +112,7 @@ angular.module('clientApp')
               },
               grid: {
                 color: '#fff',
-                margin: 10,
+                margin: 20,
                 labelMargin: 10
               }
             };
@@ -128,7 +140,7 @@ angular.module('clientApp')
       scope.minRange = scope.yearRange[0];
       scope.maxRange = scope.yearRange[1];
       scope.value = [1989, 2014];
-      scope.namesChartOptions = createChartOptions(undefined);
+      scope.namesChartOptions = createChartOptions();
     }
   };
 }]);
