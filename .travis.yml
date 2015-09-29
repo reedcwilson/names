@@ -9,6 +9,7 @@ before_install:
 before_script:
   - "npm install -g grunt-cli"
   - "npm install -g mocha"
+  - "gem install compass"
 
 script: 
   - "sh ./test.sh"
