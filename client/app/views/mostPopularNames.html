@@ -15,9 +15,17 @@
     <label>Matching a gender</label>
   </div>
   <div class="btn-group" role="group" aria-label="..." data-toggle="buttons">
-    <label class="btn btn-default" ng-click="changeGender(g)" ng-repeat="g in genders">
-      <input type="radio" value="{{g}}" />
-      {{g}}
+    <label id="maleRadioBtn" class="btn btn-default" ng-click="changeGender('Male')">
+      <input type="radio" value="Male" />
+      Male
+    </label>
+    <label id="femaleRadioBtn" class="btn btn-default" ng-click="changeGender('Female')">
+      <input type="radio" value="Female" />
+      Female
+    </label>
+    <label id="bothRadioBtn" class="btn btn-default active" ng-click="changeGender('Both')">
+      <input type="radio" value="Both" />
+      Both
     </label>
   </div>
 </div>

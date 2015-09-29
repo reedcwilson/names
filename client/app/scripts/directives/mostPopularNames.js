@@ -126,7 +126,6 @@ angular.module('clientApp')
         return [[data], ticks];
       };
 
-      scope.genders = ['Male', 'Female', 'Both'];
       scope.nTop = 5;
       scope.startsWith = 'Abra';
       scope.min = 1880;
