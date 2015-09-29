@@ -359,6 +359,14 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>',
         src: 'views/{,*/}*.html',
         dest: '.tmp/templateCache.js'
+      },
+      server: {
+        options: {
+          module: 'clientApp'
+        },
+        cwd: '<%= yeoman.app %>',
+        src: 'views/{,*/}*.html',
+        dest: '<%= yeoman.app %>/scripts/templates.js'
       }
     },
 
@@ -452,6 +460,7 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'autoprefixer:server',
+      'ngtemplates:server',
       'connect:livereload',
       'watch'
     ]);
@@ -477,7 +486,7 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
-    'ngtemplates',
+    'ngtemplates:dist',
     'concat',
     'ngAnnotate',
     'copy:dist',

@@ -7,11 +7,12 @@
  * # mostPopularNames
  */
 angular.module('clientApp')
-.directive('mostPopularNames', ['$http', function (http) {
+.directive('mostPopularNames', ['$templateCache', '$http', function (templateCache, http) {
   return {
-    templateUrl: '../../views/templates/mostPopularNames.html',
+    template: templateCache.get('views/mostPopularNames.html'),
     restrict: 'EA',
     link: function(scope, element) {
+      console.log(templateCache.get('views/mostPopularNames.html'));
 
       /**
        * receives the updates from the bootstrap slider (year range)
@@ -100,8 +101,8 @@ angular.module('clientApp')
               series: {
                 bars: {
                   numbers: {
-                    show: (t) => t.toLocaleString(),
-                    xAlign: (x) => Math.max(x - (max*0.015), max*0.01),
+                    show: function(t) { return t.toLocaleString(); },
+                    xAlign: function(x) { return Math.max(x - (max*0.015), max*0.01); },
                     rotate: 90
                   },
                   show: true,
@@ -140,6 +141,14 @@ angular.module('clientApp')
       scope.minRange = scope.yearRange[0];
       scope.maxRange = scope.yearRange[1];
       scope.value = [1989, 2014];
+      scope.demo2 = {
+        range: {
+          min: 0,
+          max: 10050
+        },
+        minPrice: 1000,
+        maxPrice: 4000
+      };
       scope.namesChartOptions = createChartOptions();
     }
   };
