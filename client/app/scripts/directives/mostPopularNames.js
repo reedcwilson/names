@@ -53,10 +53,14 @@ angular.module('clientApp')
         startsWith: "The 'starts with' value must be string of characters in the alphabet."
       };
 
+      var isInteger = function(n) {
+        return n % 1 === 0;
+      };
+
       var validateTop = function() {
         // value should be an integer and should be greater than 0 and less than 100
-        var value = Number.parseFloat(scope.nTop);
-        return Number.isInteger(value) && 
+        var value = parseFloat(scope.nTop);
+        return isInteger(value) && 
           value !== undefined && 
           value > 0 && 
           value < 101;

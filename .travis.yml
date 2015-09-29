@@ -1,0 +1,11 @@
+language: node_js
+
+node_js:
+  - "4.1"
+
+before_script:
+  - "npm install -g grunt"
+
+script: 
+  - "grunt --base client --gruntfile client\GruntFile.js build --force"
+  - "npm test"

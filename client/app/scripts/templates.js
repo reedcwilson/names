@@ -1,11 +1,6 @@
 angular.module('clientApp').run(['$templateCache', function($templateCache) {
   'use strict';
 
-  $templateCache.put('views/about.html',
-    "<p>This is the about view.</p>\n"
-  );
-
-
   $templateCache.put('views/main.html',
     "\n" +
     "<div most-popular-names></div>\n"

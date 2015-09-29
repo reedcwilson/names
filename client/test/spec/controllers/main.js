@@ -8,6 +8,11 @@ describe('Controller: MainCtrl', function () {
   var MainCtrl,
     scope;
 
+  var errorStrings = { 
+    value: "The number of most popular names must be a natural number between 1 and 100.",
+    startsWith: "The 'starts with' value must be string of characters in the alphabet."
+  };
+
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
@@ -16,8 +21,4 @@ describe('Controller: MainCtrl', function () {
       // place here mocked dependencies
     });
   }));
-
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(MainCtrl.awesomeThings.length).toBe(3);
-  });
 });
