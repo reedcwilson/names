@@ -5,7 +5,8 @@ node_js:
 
 before_script:
   - "npm install -g grunt"
+  - "npm install -g mocha"
 
 script: 
-  - "grunt --base client --gruntfile client\GruntFile.js build --force"
-  - "npm test"
+  - "grunt --base client --gruntfile client/GruntFile.js build --force"
+  - "cd server && mocha"
