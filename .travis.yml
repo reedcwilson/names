@@ -4,11 +4,11 @@ node_js:
   - "4.1"
 
 before_install:
-  - "install.sh"
+  - "sh ./install.sh"
 
 before_script:
   - "npm install -g grunt"
   - "npm install -g mocha"
 
 script: 
-  - "test.sh"
+  - "sh ./test.sh"
