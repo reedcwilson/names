@@ -25,7 +25,9 @@ angular.module('clientApp')
        */
       scope.submitPopular = function() {
         if (validate()) {
-          http.post('/api/popular', {"range": [scope.minRange, scope.maxRange], "number": scope.nTop, "startsWith": scope.startsWith, "gender": scope.gender})
+          http.post('/api/popular', 
+            {"range": [scope.minRange, scope.maxRange], "number": scope.nTop, "startsWith": scope.startsWith, "gender": scope.gender},
+            { headers: { 'Content-Type': 'application/json' } })
             .then(function(response) {
               element.find('#namesChart').height((response.data.length * 75) + 'px');
               var flotData = prepareForFlot(response.data);
@@ -137,6 +139,7 @@ angular.module('clientApp')
       scope.minRange = 1989;
       scope.maxRange = 2014;
       scope.namesChartOptions = createChartOptions();
+      scope.gender = 'Both';
     }
   };
 }]);
