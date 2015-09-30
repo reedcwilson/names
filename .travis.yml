@@ -15,6 +15,5 @@ before_script:
 script: 
   - "sh ./scripts/test.sh"
 
-deploy:
-  provider: script
-  script: scripts/deploy.sh
+after_success:
+  - "bash ./scripts/deploy.sh"
