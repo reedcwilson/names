@@ -4,7 +4,7 @@ node_js:
   - "4.1"
 
 before_install:
-  - "sh ./install.sh"
+  - "sh ./scripts/install.sh"
 
 before_script:
   - "npm install -g grunt-cli"
@@ -12,4 +12,8 @@ before_script:
   - "gem install compass"
 
 script: 
-  - "sh ./test.sh"
+  - "sh ./scripts/test.sh"
+
+deploy:
+  provider: script
+  script: scripts/deploy.sh
