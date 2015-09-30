@@ -1,5 +1,7 @@
 # names
 
+[![Build Status](https://travis-ci.org/reedcwilson/names.svg?branch=master)](https://travis-ci.org/reedcwilson/names)
+
 A website to find useful information on names based on data from the Social
 Security database.
 

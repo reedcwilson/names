@@ -33,6 +33,7 @@ module.exports = function(config) {
       'bower_components/angular-touch/angular-touch.js',
       'bower_components/Flot/jquery.flot.js',
       'bower_components/angular-flot/angular-flot.js',
+      'bower_components/angular-rangeslider/angular.rangeSlider.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

@@ -12,14 +12,6 @@ angular.module('clientApp')
     template: templateCache.get('views/mostPopularNames.html'),
     restrict: 'EA',
     link: function(scope, element) {
-      console.log(templateCache.get('views/mostPopularNames.html'));
-
-      /**
-       * receives the updates from the bootstrap slider (year range)
-       */
-      scope.slideDelegate = function(value) {
-        scope.value = value;
-      };
 
       /**
        * handles the radio button changes for gender
@@ -33,7 +25,7 @@ angular.module('clientApp')
        */
       scope.submitPopular = function() {
         if (validate()) {
-          http.post('/api/popular', {"range": scope.value, "number": scope.nTop, "startsWith": scope.startsWith, "gender": scope.gender})
+          http.post('/api/popular', {"range": [scope.minRange, scope.maxRange], "number": scope.nTop, "startsWith": scope.startsWith, "gender": scope.gender})
             .then(function(response) {
               element.find('#namesChart').height((response.data.length * 75) + 'px');
               var flotData = prepareForFlot(response.data);
@@ -61,10 +53,14 @@ angular.module('clientApp')
         startsWith: "The 'starts with' value must be string of characters in the alphabet."
       };
 
+      var isInteger = function(n) {
+        return n % 1 === 0;
+      };
+
       var validateTop = function() {
         // value should be an integer and should be greater than 0 and less than 100
-        var value = Number.parseFloat(scope.nTop);
-        return Number.isInteger(value) && 
+        var value = parseFloat(scope.nTop);
+        return isInteger(value) && 
           value !== undefined && 
           value > 0 && 
           value < 101;
@@ -134,21 +130,12 @@ angular.module('clientApp')
         return [[data], ticks];
       };
 
-      scope.genders = ['Male', 'Female', 'Both'];
       scope.nTop = 5;
       scope.startsWith = 'Abra';
-      scope.yearRange = [1880, 2014]; 
-      scope.minRange = scope.yearRange[0];
-      scope.maxRange = scope.yearRange[1];
-      scope.value = [1989, 2014];
-      scope.demo2 = {
-        range: {
-          min: 0,
-          max: 10050
-        },
-        minPrice: 1000,
-        maxPrice: 4000
-      };
+      scope.min = 1880;
+      scope.max = 2014;
+      scope.minRange = 1989;
+      scope.maxRange = 2014;
       scope.namesChartOptions = createChartOptions();
     }
   };

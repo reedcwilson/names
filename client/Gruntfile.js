@@ -44,6 +44,13 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         }
       },
+      html: {
+        files: ['<%= yeoman.app %>/views/{,*/}*.html'],
+        tasks: ['ngtemplates:server'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
+      },
       jsTest: {
         files: ['test/spec/{,*/}*.js'],
         tasks: ['newer:jshint:test', 'karma']
@@ -358,7 +365,7 @@ module.exports = function (grunt) {
         },
         cwd: '<%= yeoman.app %>',
         src: 'views/{,*/}*.html',
-        dest: '.tmp/templateCache.js'
+        dest: '<%= yeoman.app %>/scripts/templates.js'
       },
       server: {
         options: {

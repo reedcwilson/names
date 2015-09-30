@@ -1,0 +1,15 @@
+language: node_js
+
+node_js:
+  - "4.1"
+
+before_install:
+  - "sh ./install.sh"
+
+before_script:
+  - "npm install -g grunt-cli"
+  - "npm install -g mocha"
+  - "gem install compass"
+
+script: 
+  - "sh ./test.sh"
