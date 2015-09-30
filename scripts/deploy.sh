@@ -8,6 +8,7 @@ if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_BRANCH == "master" ]] then
   gem install heroku
   heroku keys:clear
   echo yes | heroku keys:add
+  git checkout .
   git remote add heroku https://git.heroku.com/name-prospector.git 
   git subtree push --prefix=server heroku master
   heroku keys:clear
