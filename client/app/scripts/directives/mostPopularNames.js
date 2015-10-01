@@ -70,7 +70,7 @@ angular.module('clientApp')
 
       var validateStartsWith = function() {
         // startsWith should be any alpha string
-        return /^[a-zA-Z]+$/.test(scope.startsWith);
+        return scope.startsWith === "" || /^[a-zA-Z]+$/.test(scope.startsWith);
       };
 
       var validate = function() {

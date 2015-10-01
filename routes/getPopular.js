@@ -33,7 +33,7 @@ var validateGender = function(gender) {
 };
 
 var validateStartsWith = function(startsWith) {
-  return /^[a-zA-Z]+$/.test(startsWith);
+  return !startsWith || /^[a-zA-Z]+$/.test(startsWith);
 };
 
 var validate = function(req) {
