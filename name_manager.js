@@ -81,6 +81,10 @@ var getYearsToNamesFromFiles = function(dir) {
       console.log(["could not read file", files[i]].join(" "));
     }
   }
+  for (var i = 0; i < 10; i++) {
+    console.log(years.pop());
+  }
+  process.exit();
   return years;
 };
 
@@ -103,65 +107,86 @@ var getNthItems = function(heap, n) {
   }
 }
 
+
 var getMostPopular = function(range, num, predicate) {
+  // a max heap where the max is the list with the most promising name (lastCount)
   var maxHeap = new Heap((l,r) => r.lastCount - l.lastCount);
+  // a max heap where the max is the most promising name
   var names = new Heap((l,r) => r.count - l.count);
+  // a dictionary to map names to name objects
   var namesLookup = new Map();
+  // the total across the current cross-section
   var total = 0;
 
+  // updates our name lists and the cross-section total
   var updateNameCounts = function(itrState) {
     var currentName = itrState.next();
     if (currentName) {
       if (predicate(currentName)) {
-        // indexed by name and/or gender
+        // see if we already have seen the name
         var existing = namesLookup.get(currentName.name);
+        // if we haven't then create one and put it in our lookup and the names heap
         if (!existing) {
           existing = new Name(currentName.name, currentName.gender, currentName.count);
           namesLookup.set(currentName.name, existing);
           names.push(existing);
         }
+        // otherwise increment the count by our current instance of the name
         else {
           existing.count += currentName.count;
         }
       }
+      // add the current name count to our cross-section total
       total += currentName.count;
+      // push the iteration state onto our max heap (which will be sorted to
+      //  have the year with the most promising name at the top)
       maxHeap.push(itrState);
     }
-  }
+  };
 
-  for (var i = parseInt(range[0]); i < parseInt(range[1]) + 1; ++i) {
-    let name = years.get(i.toString());
-    if (name) {
-      var itrState = new IterationState(name);
-      updateNameCounts(itrState);
-    }
-  }
-  var offset = 0;
-  var items = getNthItems(names, num);
-  if (items) {
-    offset = items[0].count - items[1].count;
-  }
-  else {
-    offset = 0;
-  }
-  while (maxHeap.size() > 0 && (offset < total || names.size() < num)) {
-    //console.log(`offset: ${offset}, total: ${total}, heap: ${names.size()}`);
-    for (var i = 0; i < 1000; ++i) {
-      var itrState = maxHeap.pop();
-      if (!itrState) {
-        break;
-      }
-      total -= itrState.lastCount;
-      updateNameCounts(itrState);
-    }
-    items = getNthItems(names, num);
+  // gets the offset amount by subtracting the nth item count by the nth+1 item
+  var getOffset = function(offset, names, num) {
+    var items = getNthItems(names, num);
     if (items) {
       offset = items[0].count - items[1].count;
     }
     else {
       offset = 0;
     }
+    return offset;
+  };
+
+
+  // get all of the names for the given year range
+  for (var i = parseInt(range[0]); i < parseInt(range[1]) + 1; ++i) {
+    let name = years.get(i.toString());
+    if (name) {
+      var itrState = new IterationState(name);
+      // process the first name in each list of names to get a bearing
+      updateNameCounts(itrState);
+    }
   }
+  var offset = getOffset(0, names, num);
+  // loop while we have a year with a promising name and (our cross-section is
+  //  greater than the offset or the matching names is less than the requested
+  //  number of names)
+  while (maxHeap.size() > 0 && (offset < total)) { // || names.size() < num)) {
+    console.log(`offset: ${offset}, total: ${total}, heap: ${names.size()}`);
+    for (var i = 0; i < 1000; ++i) {
+      var itrState = maxHeap.pop();
+      if (!itrState) {
+        break;
+      }
+      // subtract the last name from our total because we will be replacing it
+      // with a new name
+      total -= itrState.lastCount;
+      updateNameCounts(itrState);
+    }
+    offset = getOffset(offset, names, num);
+  }
+  console.log(`offset: ${offset}, total: ${total}, heap: ${names.size()}`);
+  console.log(names);
+  console.log(namesLookup);
   var finalNames = [];
   for (var i = 0; i < num; ++i) {
     var name = names.pop();
