@@ -5,7 +5,6 @@ var fs = require('fs'),
     Heap = require('heap');
 
 let dataDir = 'data';
-console.log(path.dirname(dataDir));
 
 class Name {
   constructor(name, gender, count) {
@@ -59,7 +58,8 @@ var getYearsToNamesFromFiles = function(dir) {
   // get the files
   let files = fs.readdirSync(dir);
   for (var i = 0; i < files.length; ++i) {
-    var sortedNames = new Heap((l, r) => r.count - l.count);
+    var sortedNames = [];
+    //var sortedNames = new Heap((l, r) => r.count - l.count);
     // get the data from each file
     let dataStr = fs.readFileSync(path.join(dir, files[i]));
     if (dataStr) {
@@ -75,16 +75,13 @@ var getYearsToNamesFromFiles = function(dir) {
       }
       // strip off the file suffix
       let yearName = files[i].substring(0, 4);
-      years.set(yearName, sortedNames.toArray());
+      years.set(yearName, sortedNames.sort((a, b) => b.count - a.count));
+      //years.set(yearName, sortedNames.toArray());
     }
     else {
       console.log(["could not read file", files[i]].join(" "));
     }
   }
-  for (var i = 0; i < 10; i++) {
-    console.log(years.pop());
-  }
-  process.exit();
   return years;
 };
 
@@ -170,8 +167,8 @@ var getMostPopular = function(range, num, predicate) {
   // loop while we have a year with a promising name and (our cross-section is
   //  greater than the offset or the matching names is less than the requested
   //  number of names)
-  while (maxHeap.size() > 0 && (offset < total)) { // || names.size() < num)) {
-    console.log(`offset: ${offset}, total: ${total}, heap: ${names.size()}`);
+  while (maxHeap.size() > 0 && (offset < total || names.size() < num)) {
+    //console.log(`offset: ${offset}, total: ${total}, heap: ${names.size()}`);
     for (var i = 0; i < 1000; ++i) {
       var itrState = maxHeap.pop();
       if (!itrState) {
@@ -184,9 +181,6 @@ var getMostPopular = function(range, num, predicate) {
     }
     offset = getOffset(offset, names, num);
   }
-  console.log(`offset: ${offset}, total: ${total}, heap: ${names.size()}`);
-  console.log(names);
-  console.log(namesLookup);
   var finalNames = [];
   for (var i = 0; i < num; ++i) {
     var name = names.pop();
