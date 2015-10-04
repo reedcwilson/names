@@ -5,4 +5,4 @@ ls
 echo "listing node_modules"
 ls node_modules
 echo "listing .bin"
-.bin
+ls node_modules/.bin
