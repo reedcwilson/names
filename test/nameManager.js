@@ -2,9 +2,9 @@
 
 let assert = require("assert");
 let b = require('./requestBuilder.js'),
-    nameManager = require('../name_manager.js');
+    nameManager = require('../src/nameManager.js');
 
-describe('name_manager', function() {
+describe('nameManager', function() {
   describe('Name', function() {
     describe('#isMale', function() {
       it('should be true for names with "M"', function() {

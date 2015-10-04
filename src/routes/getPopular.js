@@ -1,6 +1,6 @@
 "use strict";
 
-let nameManager = require('../name_manager');
+let nameManager = require('../nameManager');
 
 let genders = ['male', 'female', 'both', 'combined'];
 
