@@ -110,5 +110,15 @@ describe('routes/getPopular', function() {
         assert.equal(0, getPopular.validate(req).length);
       });
     });
+    describe('#get', function() {
+      it('should find the correct top 3 female names starting with "br" for the years 1975-1978', function() {
+        let expected = ['brandy', 'brandi', 'brenda']; 
+        var req = b.buildReq([b.buildRangeJson("[1975, 1978]"), b.buildNumberJson(3), b.buildGenderJson('female'), b.buildStartsWithJson('br')]);
+        let actual = getPopular.get(req).map(n => n.name);
+        assert.equal(expected[0], actual[0]);
+        assert.equal(expected[1], actual[1]);
+        assert.equal(expected[2], actual[2]);
+      });
+    });
   });
 });
