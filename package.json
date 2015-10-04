@@ -6,7 +6,7 @@
     "start": "NODE_ENV=production node ./bin/www",
     "test": "mocha 'test/**/*.js'",
     "dev": "NODE_ENV=development nodemon ./bin/www",
-    "coverage": "istanbul cover ./node_modules/.bin/_mocha --report lcovonly -- -R spec test/**/*.js && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls.js && rm -rf ./coverage"
+    "coverage": "istanbul cover node_modules/.bin/_mocha test/**/*.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
