@@ -4,7 +4,8 @@ var fs = require('fs'),
     path = require('path'),
     Heap = require('heap');
 
-let dataDir = 'data';
+let dataDir = __dirname + '/../data';
+console.log(dataDir);
 
 class Name {
   constructor(name, gender, count) {
