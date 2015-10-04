@@ -1,6 +1,7 @@
 # names
 
 [![Build Status](https://travis-ci.org/reedcwilson/names.svg?branch=master)](https://travis-ci.org/reedcwilson/names)
+[![Coverage Status](https://coveralls.io/repos/reedcwilson/names/badge.svg?branch=master&service=github)](https://coveralls.io/github/reedcwilson/names?branch=master)
 
 A website to find useful information on names based on data from the Social
 Security database.
