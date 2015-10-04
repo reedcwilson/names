@@ -1,6 +1,6 @@
 'use strict';
 
-var nameManager = require('./name_manager');
+var nameManager = require('./nameManager');
 
 nameManager.getMostPopular
 

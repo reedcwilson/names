@@ -2,7 +2,7 @@
 
 let assert = require("assert");
 
-let getPopular = require('../../routes/getPopular'),
+let getPopular = require('../../src/routes/getPopular'),
     b = require('../requestBuilder');
 
 
