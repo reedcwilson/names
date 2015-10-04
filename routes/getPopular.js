@@ -61,7 +61,7 @@ var validate = function(req) {
 };
 
 var get = function(req) {
-  return nameManager.getMostPopular(req.body.range, req.body.number, createPredicate(req.body.gender, req.body.startsWith));
+  return nameManager.getNames(req.body.range, req.body.number, createPredicate(req.body.gender, req.body.startsWith));
 };
 
 module.exports = { "validate": validate, "get": get };
