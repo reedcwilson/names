@@ -21,6 +21,9 @@ class Name {
   startsWith(c) {
     return this.name.startsWith(c);
   }
+  equals(n) {
+    return this.name === n.toLowerCase();
+  }
 }
 
 class IterationState {
@@ -105,7 +108,7 @@ var getNthItems = function(heap, n) {
 }
 
 
-var getMostPopular = function(range, num, predicate) {
+var getNames = function(range, num, predicate) {
   // a max heap where the max is the list with the most promising name (lastCount)
   var maxHeap = new Heap((l,r) => r.lastCount - l.lastCount);
   // a max heap where the max is the most promising name
@@ -193,4 +196,4 @@ var getMostPopular = function(range, num, predicate) {
 
 let years = getYearsToNamesFromFiles(dataDir);
 
-module.exports = { 'getMostPopular': getMostPopular };
+module.exports = { 'getNames': getNames, 'Name': Name };
