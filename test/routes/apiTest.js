@@ -1,13 +1,17 @@
 "use strict";
 
-let assert = require("assert");
+let assert = require("assert"),
+    sinon = require("sinon"),
+    fs = require('fs'),
+    realNameManager = require("../../src/nameManager")(fs);
 
-let getPopular = require('../../src/routes/getPopular'),
-    b = require('../requestBuilder');
-
+let b = require('../requestBuilder');
 
 describe('routes/getPopular', function() {
   describe('#validate()', function () {
+    let getNames = sinon.stub().returns([{"name": "brandy"}]),
+        nameManager = sinon.stub().returns({ 'getNames': getNames }),
+        getPopular = require('../../src/routes/getPopular')(nameManager());
     describe('range', function() {
       it('should ensure that the range is required', function () {
         var req = b.buildReq([b.buildNumberJson(3), b.buildGenderJson('male')]);
@@ -110,15 +114,56 @@ describe('routes/getPopular', function() {
         assert.equal(0, getPopular.validate(req).length);
       });
     });
-    describe('#get', function() {
-      it('should find the correct top 3 female names starting with "br" for the years 1975-1978', function() {
-        let expected = ['brandy', 'brandi', 'brenda']; 
-        var req = b.buildReq([b.buildRangeJson("[1975, 1978]"), b.buildNumberJson(3), b.buildGenderJson('female'), b.buildStartsWithJson('br')]);
-        let actual = getPopular.get(req).map(n => n.name);
-        assert.equal(expected[0], actual[0]);
-        assert.equal(expected[1], actual[1]);
-        assert.equal(expected[2], actual[2]);
-      });
+  });
+  describe('#get', function() {
+    // setup spy so that I can test the predicate
+    var getNames, nameManager, getPopular;
+    beforeEach(function() {
+      getNames = sinon.spy();
+      nameManager = sinon.stub().returns({ 'getNames': getNames });
+      getPopular = require('../../src/routes/getPopular')(nameManager());
+    });
+    it('should successfully create a gender and startsWith predicate', function() {
+      var req = b.buildReq([b.buildRangeJson("[1975, 1978]"), b.buildNumberJson(1), b.buildGenderJson('female'), b.buildStartsWithJson('br')]);
+      // call the method
+      getPopular.get(req);
+      let name = new realNameManager.Name("britney", "F", 25);
+      assert.ok(getNames.args[0][2](name));
+    });
+    it('should successfully create a predicate when there is no gender or startsWith', function() {
+      var req = b.buildReq([b.buildRangeJson("[1975, 1978]"), b.buildNumberJson(1)]);
+      // call the method
+      getPopular.get(req);
+      let name = new realNameManager.Name("britney", "F", 25);
+      assert.ok(getNames.args[0][2](name));
+    });
+    it('should successfully create a predicate with a combined gender option', function() {
+      var req = b.buildReq([b.buildRangeJson("[1975, 1978]"), b.buildNumberJson(1), b.buildGenderJson('combined')]);
+      // call the method
+      getPopular.get(req);
+      let name = new realNameManager.Name("britney", "F", 25);
+      assert.ok(getNames.args[0][2](name));
+    });
+    it('should successfully create a predicate with a both gender option', function() {
+      var req = b.buildReq([b.buildRangeJson("[1975, 1978]"), b.buildNumberJson(1), b.buildGenderJson('both')]);
+      // call the method
+      getPopular.get(req);
+      let name = new realNameManager.Name("britney", "F", 25);
+      assert.ok(getNames.args[0][2](name));
+    });
+    it('should successfully create a predicate with a MALE gender option', function() {
+      var req = b.buildReq([b.buildRangeJson("[1975, 1978]"), b.buildNumberJson(1), b.buildGenderJson('MALE')]);
+      // call the method
+      getPopular.get(req);
+      let name = new realNameManager.Name("reed", "M", 25);
+      assert.ok(getNames.args[0][2](name));
+    });
+    it('should successfully create a predicate with a FEMALE gender option', function() {
+      var req = b.buildReq([b.buildRangeJson("[1975, 1978]"), b.buildNumberJson(1), b.buildGenderJson('FEMALE')]);
+      // call the method
+      getPopular.get(req);
+      let name = new realNameManager.Name("britney", "F", 25);
+      assert.ok(getNames.args[0][2](name));
     });
   });
 });
