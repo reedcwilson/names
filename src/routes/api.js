@@ -3,7 +3,9 @@
 var express = require('express'),
     router = express.Router();
 
-let getPopular = require('./getPopular');
+let fs = require('fs');
+let nameManager = require('../nameManager')(fs);
+let getPopular = require('./getPopular')(nameManager);
 
 /* POST the n most popular names. */
 router.post('/popular', function(req, res, next) {
