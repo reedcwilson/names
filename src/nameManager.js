@@ -109,6 +109,11 @@ module.exports = function(fs) {
 
 
   var getNames = function(range, num, predicate) {
+
+    console.log(years.size);
+    if (years === undefined || years.size === 0) {
+      return undefined;
+    }
     // a max heap where the max is the list with the most promising name (lastCount)
     var maxHeap = new Heap((l,r) => r.lastCount - l.lastCount);
     // a max heap where the max is the most promising name

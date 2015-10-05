@@ -1,12 +1,15 @@
 "use strict";
 
-let assert = require("assert");
-let b = require('./requestBuilder.js');
+let assert = require("assert"),
+    sinon = require("sinon"),
+    b = require('./requestBuilder.js');
 
 let fs = require('fs'),
     nameManager = require('../src/nameManager')(fs);
 
-let fakeNameManager = require('../src/nameManager')(fs);
+var fakeFs = { 'readFileSync': (path) => undefined, 'readdirSync': (dir) => ['first', 'second', 'third'] };
+
+let fakeNameManager = require('../src/nameManager')(fakeFs);
 
 describe('nameManager', function() {
   describe('Name', function() {
@@ -66,28 +69,33 @@ describe('nameManager', function() {
   describe('#getNames', function() {
     it('should find the correct top 3 male names starting with "sa" for the year 2014', function() {
       let expected = ['samuel', 'sawyer', 'santiago'],
-          actual = fakeNameManager.getNames(['2014', '2014'], 3, n => n.isMale() && n.startsWith('sa')).map(n => n.name);
+          actual = nameManager.getNames(['2014', '2014'], 3, n => n.isMale() && n.startsWith('sa')).map(n => n.name);
       assert.equal(expected[0], actual[0]);
       assert.equal(expected[1], actual[1]);
       assert.equal(expected[2], actual[2]);
     });
     it('should find the correct top 3 male names starting with "sa" for the years 1920-1923', function() {
       let expected = ['samuel', 'sam', 'salvatore'],
-          actual = fakeNameManager.getNames(['1920', '1922'], 3, n => n.isMale() && n.startsWith('sa')).map(n => n.name);
+          actual = nameManager.getNames(['1920', '1922'], 3, n => n.isMale() && n.startsWith('sa')).map(n => n.name);
       assert.equal(expected[0], actual[0]);
       assert.equal(expected[1], actual[1]);
       assert.equal(expected[2], actual[2]);
     });
     it('should find the correct top 3 female names starting with "br" for the years 1975-1978', function() {
       let expected = ['brandy', 'brenda', 'brandi'],
-          actual = fakeNameManager.getNames(['1975', '1977'], 3, n => n.isFemale() && n.startsWith('br')).map(n => n.name);
+          actual = nameManager.getNames(['1975', '1977'], 3, n => n.isFemale() && n.startsWith('br')).map(n => n.name);
       assert.equal(expected[0], actual[0]);
       assert.equal(expected[1], actual[1]);
       assert.equal(expected[2], actual[2]);
     });
     it('should report that the male name "reed" is the ### most popular male name from the years 1989-2014', function() {
-      let actual = fakeNameManager.getNames(['2012', '2014'], 1, n => n.isMale() && n.equals('reed')).map(n => n.name);
+      let actual = nameManager.getNames(['2012', '2014'], 1, n => n.isMale() && n.equals('reed')).map(n => n.name);
       assert.equal(42, 42);
+    });
+    it('should correctly return undefined if it couldnt read the files or if there are no files', function() {
+      let actual = fakeNameManager.getNames(['1975', '1977'], 3, n => n.isFemale() && n.startsWith('br'));
+      var mockFs = sinon.mock(fakeFs);
+      assert.equal(undefined, actual);
     });
   });
 });
