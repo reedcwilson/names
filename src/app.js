@@ -27,6 +27,11 @@ if (app.get('env') === 'development') {
   app.use(express.static(path.join(__dirname, '../client/.tmp')));
   app.use(express.static(path.join(__dirname, '../client/app')));
 
+  app.use(function(req, res, next) {
+    res.status(404);
+    res.sendFile(path.resolve(__dirname + '/../client/app/404.html'));
+  });
+
   // Error Handling
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
@@ -44,6 +49,11 @@ if (app.get('env') === 'production') {
 
   // changes it to use the optimized version for production
   app.use(express.static(path.join(__dirname, '../client/dist')));
+
+  app.use(function(req, res, next) {
+    res.status(404);
+    res.sendFile(path.resolve(__dirname + '/../client/dist/404.html'));
+  });
 
   // production error handler
   // no stacktraces leaked to user
