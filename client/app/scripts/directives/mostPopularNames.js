@@ -33,12 +33,44 @@ angular.module('clientApp')
               var flotData = prepareForFlot(response.data);
               scope.namesResults = flotData[0];
               var ticks = flotData[1];
-              scope.namesChartOptions = createChartOptions(ticks, getMaxCount(response.data));
+              scope.namesChartOptions = scope.createChartOptions(ticks, getMaxCount(response.data));
             }, function(response) {
               console.log('An error occurred: ' + response.data);
             });
         }
       };
+
+      scope.createChartOptions = function(ticks, max) {
+        return {
+              yaxis: { 
+                ticks: ticks,
+                autoscaleMargin: null
+              },
+              xaxis: {
+                show: false,
+                autoscaleMargin: null
+              },
+              series: {
+                bars: {
+                  numbers: {
+                    show: function(t) { return t.toLocaleString(); },
+                    xAlign: function(x) { return Math.max(x - (max*0.015), max*0.01); },
+                    rotate: 90
+                  },
+                  show: true,
+                  horizontal: true,
+                  barWidth: 0.8,
+                  align: 'center'
+                }
+              },
+              grid: {
+                color: '#fff',
+                margin: 20,
+                labelMargin: 10
+              }
+            };
+      };
+
 
       var getMaxCount = function(names) {
         var max = 0;
@@ -86,37 +118,6 @@ angular.module('clientApp')
         return validValue && validStartsWith;
       };
 
-      var createChartOptions = function(ticks, max) {
-        return {
-              yaxis: { 
-                ticks: ticks,
-                autoscaleMargin: null
-              },
-              xaxis: {
-                show: false,
-                autoscaleMargin: null
-              },
-              series: {
-                bars: {
-                  numbers: {
-                    show: function(t) { return t.toLocaleString(); },
-                    xAlign: function(x) { return Math.max(x - (max*0.015), max*0.01); },
-                    rotate: 90
-                  },
-                  show: true,
-                  horizontal: true,
-                  barWidth: 0.8,
-                  align: 'center'
-                }
-              },
-              grid: {
-                color: '#fff',
-                margin: 20,
-                labelMargin: 10
-              }
-            };
-      };
-
       /**
        * prepares the data and ticks arrays for the flot chart.
        * returns an array holding the data and the ticks
@@ -138,7 +139,7 @@ angular.module('clientApp')
       scope.max = 2014;
       scope.minRange = 1989;
       scope.maxRange = 2014;
-      scope.namesChartOptions = createChartOptions();
+      scope.namesChartOptions = scope.createChartOptions();
       scope.gender = 'Both';
     }
   };

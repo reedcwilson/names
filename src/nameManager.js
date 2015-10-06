@@ -109,8 +109,6 @@ module.exports = function(fs) {
 
 
   var getNames = function(range, num, predicate) {
-
-    console.log(years.size);
     if (years === undefined || years.size === 0) {
       return undefined;
     }
