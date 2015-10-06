@@ -25,8 +25,9 @@ angular.module('clientApp')
        */
       scope.submitPopular = function() {
         if (validate()) {
+          console.log({"range": [scope.minRange, scope.maxRange], "number": scope.nTop, "startsWith": scope.startsWith, "gender": scope.gender});
           http.post('/api/popular', 
-            {"range": [scope.minRange, scope.maxRange], "number": scope.nTop, "startsWith": scope.startsWith, "gender": scope.gender},
+            {"range": [scope.minRange, scope.maxRange], "number": parseInt(scope.nTop), "startsWith": scope.startsWith, "gender": scope.gender},
             { headers: { 'Content-Type': 'application/json' } })
             .then(function(response) {
               element.find('#namesChart').height((response.data.length * 75) + 'px');
