@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "NODE_ENV=production node ./bin/www",
-    "test": "istanbul cover node_modules/.bin/_mocha 'test/**/*Test.js' -- -R spec",
+    "test": "istanbul cover --dir 'coverage/server' node_modules/.bin/_mocha 'test/**/*Test.js' -- -R spec",
     "dev": "NODE_ENV=development nodemon ./bin/www"
   },
   "dependencies": {
