@@ -17,6 +17,6 @@ deploy:
     secure: F/TumPinQX5inkEqQAfmstCY9pK5mUY9CfdFQkCACpqRSDKFSxKnG6V+Zsgo6yBoVnCl9gN09YXsDjxNMdGmhMIZvc7Twb2YNy/3SOUGblMlLAQMbZmSy1E83B4pMHiRkij0jvnxsx3qRXBT9gtYoxZHTgeBrDDb2XbCgbhHUF3WZdH12miB+OPVjiODkIqu1op789+XtaanTVCLxxY3ktKpRCzU3SLxxfTNW7szQY0POIlD+5ujK6d/R6lqpeeOw7+GGuH7PDlt4zaAqI/7HaO/a8t+oi22QRl4NZfVasna4BZbjHvnbSZeqZvGA7RJBLJpNkAK9fElQYJnxhnfUSriK8meEfbxmDs875b05JZPVKZ0Q+Zjq8j7/VUpGROlh4X53U/HVT4L9X9Yk6T4walo/Ss6zokOocwdIJhrnQBX2hsGYRBj27xZu4fSHSkIWnR5/cjnS2lgZGz1lsHP30Y0DZgQ1VvlDsaY/O1DNn4FF13xvM2bCJGGSV6+sVc08W/Edr+GMXznWa6CCzzDjVEfFYxEtfAMh6WI+vUh3GqYzhO4+9xvIpLGFZ9Ic+MYr1kgmTkknkAM2bG+xqRNUztzkvJ10naLC5yIzkiNEB00TsQwEHmVk3k65azTks1/8dWF/4UGjg7cHk8dnHGQTlaZidihRmWsbtDNKkAmSeA=
   app: name-prospector
   run:
-    - "cd client && grunt build"
+    - "cd client && grunt build --force"
 after_success:
 - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
