@@ -9,7 +9,7 @@ var routes = require('./routes/api');
 
 var app = express();
 
-app.use(favicon(path.join(__dirname, 'favicon.ico')));
+app.use(favicon(path.join(__dirname, '../favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,10 +22,10 @@ app.use('/api', routes);
  */
 if (app.get('env') === 'development') {
   // This will change in production since we'll be using the dist folder
-  app.use(express.static(path.join(__dirname, '/client')));
+  app.use(express.static(path.join(__dirname, '../client')));
   // This covers serving up the index page
-  app.use(express.static(path.join(__dirname, '/client/.tmp')));
-  app.use(express.static(path.join(__dirname, '/client/app')));
+  app.use(express.static(path.join(__dirname, '../client/.tmp')));
+  app.use(express.static(path.join(__dirname, '../client/app')));
 
   // Error Handling
   app.use(function(err, req, res, next) {
@@ -43,7 +43,7 @@ if (app.get('env') === 'development') {
 if (app.get('env') === 'production') {
 
   // changes it to use the optimized version for production
-  app.use(express.static(path.join(__dirname, '/dist')));
+  app.use(express.static(path.join(__dirname, '../client/dist')));
 
   // production error handler
   // no stacktraces leaked to user
