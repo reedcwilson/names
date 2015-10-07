@@ -25,11 +25,11 @@ cd ../app
 echo "Now in $(pwd)"
 
 # download the version of node you'll need
-curl http://nodejs.org/dist/v4.1.2/node-v4.1.2-linux-x64.tar.gz | tar xz
+curl http://nodejs.org/dist/v4.1.2/node-v4.1.2-linux-x64.tar.gz | tar -xzv
 
 # tar up the app dir
 cd ..
-tar -cxf slug.tgz ./app
+tar -cxvf slug.tgz ./app
 
 # tell heroku that you want to publish a slug and give it the command to call after compile
 OUTPUT=$(curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/vnd.heroku+json; version=3' -d '{"process_types":{"web":"NODE_ENV=production node-v4.1.2-linux-x64/bin/node ./bin/www"}}' -n https://api.heroku.com/apps/name-prospector/slugs)
