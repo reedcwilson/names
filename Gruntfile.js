@@ -21,8 +21,9 @@ module.exports = function (grunt) {
 
   // Configurable paths for the application
   var appConfig = {
-    app: require('./bower.json').appPath || 'app',
-    dist: './dist'
+    app: require('./bower.json').appPath || './client/app',
+    dist: './dist',
+    test: './client/test'
   };
 
   // Define the configuration for all the tasks
@@ -52,7 +53,7 @@ module.exports = function (grunt) {
         }
       },
       jsTest: {
-        files: ['test/spec/{,*/}*.js'],
+        files: ['client/test/spec/{,*/}*.js'],
         tasks: ['newer:jshint:test', 'karma']
       },
       compass: {
@@ -107,7 +108,7 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               connect.static('.tmp'),
-              connect.static('test'),
+              connect.static('client/test'),
               connect().use(
                 '/bower_components',
                 connect.static('./bower_components')
@@ -139,9 +140,9 @@ module.exports = function (grunt) {
       },
       test: {
         options: {
-          jshintrc: 'test/.jshintrc'
+          jshintrc: 'client/test/.jshintrc'
         },
-        src: ['test/spec/{,*/}*.js']
+        src: ['client/test/spec/{,*/}*.js']
       }
     },
 
@@ -190,12 +191,12 @@ module.exports = function (grunt) {
     wiredep: {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//
+        ignorePath:  /(\.\.\/){1,3}/
       },
       test: {
         devDependencies: true,
         src: '<%= karma.unit.configFile %>',
-        ignorePath:  /\.\.\//,
+        ignorePath:  /(\.\.\/){1,3}/,
         fileTypes:{
           js: {
             block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
@@ -210,7 +211,7 @@ module.exports = function (grunt) {
       },
       sass: {
         src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-        ignorePath: /(\.\.\/){1,2}bower_components\//
+        ignorePath: /(\.\.\/){1,3}bower_components\//
       }
     },
 
@@ -450,7 +451,7 @@ module.exports = function (grunt) {
     // Test settings
     karma: {
       unit: {
-        configFile: 'test/karma.conf.js',
+        configFile: 'client/test/karma.conf.js',
         singleRun: true
       }
     }

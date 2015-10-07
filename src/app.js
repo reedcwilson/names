@@ -22,9 +22,9 @@ app.use('/api', routes);
  */
 if (app.get('env') === 'development') {
   // This will change in production since we'll be using the dist folder
-  app.use(express.static(path.join(__dirname, '../client')));
+  app.use(express.static(path.join(__dirname, '../')));
   // This covers serving up the index page
-  app.use(express.static(path.join(__dirname, '../client/.tmp')));
+  app.use(express.static(path.join(__dirname, '../.tmp')));
   app.use(express.static(path.join(__dirname, '../client/app')));
 
   app.use(function(req, res, next) {
@@ -48,11 +48,11 @@ if (app.get('env') === 'development') {
 if (app.get('env') === 'production') {
 
   // changes it to use the optimized version for production
-  app.use(express.static(path.join(__dirname, '../client/dist')));
+  app.use(express.static(path.join(__dirname, '../dist')));
 
   app.use(function(req, res, next) {
     res.status(404);
-    res.sendFile(path.resolve(__dirname, '../client/dist/404.html'));
+    res.sendFile(path.resolve(__dirname, '../dist/404.html'));
   });
 
   // production error handler
