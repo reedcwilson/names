@@ -11,7 +11,7 @@ module.exports = function(config) {
     autoWatch: true,
 
     // base path, that will be used to resolve files and exclude
-    basePath: '../',
+    basePath: '../../',
 
     // testing framework to use (jasmine/mocha/qunit/...)
     // as well as any additional frameworks (requirejs/chai/sinon/...)
@@ -36,8 +36,8 @@ module.exports = function(config) {
       'bower_components/angular-rangeslider/angular.rangeSlider.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
-      "app/scripts/**/*.js",
-      "test/spec/**/*.js"
+      "client/app/scripts/**/*.js",
+      "client/test/spec/**/*.js"
     ],
 
     preprocessors: {
