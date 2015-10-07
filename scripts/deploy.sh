@@ -36,7 +36,9 @@ cd ..
 echo "Now in $(pwd)"
 tar -czf slug.tgz ./app
 
-# tell heroku that you want to publish a slug and give it the command to call after compile
+# tell heroku that you want to publish a slug and give it the command to call 
+# after compile. 
+### Change the name of the heroku app to customize
 OUTPUT=$(curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/vnd.heroku+json; version=3' -d '{"process_types":{"web":"NODE_ENV=production node-v4.1.2-linux-x64/bin/node ./bin/www"}}' -n https://api.heroku.com/apps/name-prospector/slugs)
 echo "\n${OUTPUT}\n"
 
@@ -51,5 +53,6 @@ echo "ID: ${ID}\n"
 ## push the slug to heroku's given url
 curl -X PUT -H "Content-Type:" --data-binary @slug.tgz ${URL}
 
-## release the kraken (slug)
+# release the kraken (slug)
+### Change the name of the heroku app to customize
 curl -X POST -H "Accept: application/vnd.heroku+json; version=3" -H "Content-Type: application/json" -d {'"'slug'"':'"'${ID}'"'} -n https://api.heroku.com/apps/name-prospector/releases
