@@ -29,7 +29,7 @@ if (app.get('env') === 'development') {
 
   app.use(function(req, res, next) {
     res.status(404);
-    res.sendFile(path.resolve(__dirname + '/../client/app/404.html'));
+    res.sendFile(path.resolve(__dirname, '../client/app/404.html'));
   });
 
   // Error Handling
@@ -52,7 +52,7 @@ if (app.get('env') === 'production') {
 
   app.use(function(req, res, next) {
     res.status(404);
-    res.sendFile(path.resolve(__dirname + '/../client/dist/404.html'));
+    res.sendFile(path.resolve(__dirname, '../client/dist/404.html'));
   });
 
   // production error handler
