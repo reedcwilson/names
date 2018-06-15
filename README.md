@@ -37,7 +37,7 @@ range.
 
 | Parameter    | Description |
 | ------------ | ----------- |
-| range *      | An array of two representing the range of years to search. The bounds of accepted years are: 1880-2014. **Example**: `[1950, 1975]` |
+| range *      | An array of two representing the range of years to search. **Example**: `[1950, 1975]` |
 | number *     | The number of names to retrieve. **Example**: `5` |
 | gender       | The gender that the names should match. Searches for combined if null. **Values**: `"male"`, `"female"`, `"both"`, `"combined"`. `Both` which will return a gender separated list. `combined` will find the most common name regardless of gender |
 | startsWith   | A string that the names should begin with to match. **Example** `re` |

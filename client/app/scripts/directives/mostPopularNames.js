@@ -136,9 +136,9 @@ angular.module('clientApp')
       scope.nTop = 5;
       scope.startsWith = 'Abra';
       scope.min = 1880;
-      scope.max = 2014;
+      scope.max = 2017;
       scope.minRange = 1989;
-      scope.maxRange = 2014;
+      scope.maxRange = 2017;
       scope.namesChartOptions = scope.createChartOptions();
       scope.gender = 'Both';
     }

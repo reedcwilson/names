@@ -20,7 +20,7 @@ module.exports = function(nameManager) {
       Array.isArray(range) && 
       range.length == 2 && 
       range[0] > 1879 && 
-      range[1] < 2015 && 
+      range[1] < 2018 && 
       range[0] <= range[1];
   };
 
@@ -45,7 +45,7 @@ module.exports = function(nameManager) {
     }
     else {
       if (!validateRange(req.body.range)) {
-        messages.push("'range' is required and must be an array of two. The first value must be greater than or equal to 1880 and less than or equal to the second value. The second value must be less than 2015.");
+        messages.push("'range' is required and must be an array of two. The first value must be greater than or equal to 1880 and less than or equal to the second value. The second value must be less than 2018.");
       }
       if (!validateNumber(req.body.number)) {
         messages.push("'number' is required and must be a natural number greater than 0");
